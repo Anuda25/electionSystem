@@ -40,7 +40,6 @@ int main(){
 }
 void voter(){
 	int list2,c=0; //list2=store voter page user input c=count
-    //char V_nic[20];//voter nic
     FILE *file1;
     file1=fopen("voterdetails.txt","w");
     char V_nic[20] ="200415504199";
@@ -89,7 +88,7 @@ void voter(){
 }
 void candidate(){
 	
-	
+	printf("welcome");
 }
 void admin(){
 int ladmin;
@@ -130,6 +129,22 @@ int ladmin;
 	
 }
 void seewinner(){
-	
+	if(checkSTAT==2){
+        FILE *fvote;  //vote text file
+        fvote=fopen("vote.txt","r");
+        if(fvote==NULL){
+            printf("\n!! ERROR The file is empty!!\n");
+            
+        }
+        int max=0;
+        
+
+
+
+
+
+    }else{
+        printf("\n !!! votted not ending !!!\n");
+    }
 	
 }
