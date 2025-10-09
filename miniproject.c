@@ -39,7 +39,7 @@ int main(){
 }
 void voter(){
 	
-	
+	printf("Hello");
 }
 void candidate(){
 	
