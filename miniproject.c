@@ -44,7 +44,7 @@ void voter(){
 }
 void candidate(){
 	
-	
+	printf("welcome");
 }
 void admin(){
 int ladmin;
@@ -85,6 +85,22 @@ int ladmin;
 	
 }
 void seewinner(){
-	
+	if(checkSTAT==2){
+        FILE *fvote;  //vote text file
+        fvote=fopen("vote.txt","r");
+        if(fvote==NULL){
+            printf("\n!! ERROR The file is empty!!\n");
+            return 1;
+        }
+        int max=0;
+        
+
+
+
+
+
+    }else{
+        printf("\n !!! votted not ending !!!\n");
+    }
 	
 }
