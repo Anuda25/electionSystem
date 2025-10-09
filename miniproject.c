@@ -43,7 +43,7 @@ void voter(){
 }
 void candidate(){
 	
-	
+	printf("welcome");
 }
 void admin(){
 	
