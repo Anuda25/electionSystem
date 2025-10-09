@@ -6,24 +6,25 @@ void candidate();
 void admin();
 void seewinner();
 int main(){
-    int list1;
+    int list1; //store main page user input
+
     while(true){
     	printf("1=Voter\n2=Candidate\n3=Admin\n4=See Winner\n5=Exit\n");
 	    printf("Your Choise: ");
 	    scanf("%d",&list1);
-        if(list1==1){
-			voter();
+        if(list1==1){ //voter part
+            voter();
 			break;
         }
-        else if(list1==2){
+        else if(list1==2){//candidate part
 			candidate();
 			break;
         }
-        else if(list1==3){
+        else if(list1==3){//admin part
 			admin();
 			break;
         }
-        else if(list1==4){
+        else if(list1==4){// see winner part
 			seewinner();
 			break;
         }
@@ -38,7 +39,52 @@ int main(){
     return 0;
 }
 void voter(){
-	
+    int list2,c=0; //list2=store voter page user input c=count
+    //char V_nic[20];//voter nic
+    FILE *file1;
+    file1=fopen("voterdetails.txt","w");
+    char V_nic[20] ="200415504199";
+    fprintf(file1,"%s",V_nic);
+    fclose(file1);
+	while(true){
+        printf("1=Registration\n2=login\n3=Exit\n");
+        printf("Your Choise: ");
+        scanf("%d",&list2);
+        if(list2==1){
+            printf("Enter your NIC: ");
+            scanf("%s",&V_nic);
+
+            file1=fopen("voterdetails.txt","r");
+            char line[256],fnic[256]; //line=text_file_line,fnic=text_file_nic
+            while(fgets(line,sizeof(line),file1)){
+                sscanf(line, "%[^,]",fnic);
+                    
+                    int size=sizeof(V_nic);
+                    for(int i=0;i<size;i++){
+                        if(fnic[i]==V_nic[i]){
+                            c++;
+                        }
+                        if(c==12){
+                            printf("\nAlready Registered!!\n");
+                        }
+                        else{
+                            //Another part!!!!!
+                        }
+                    }
+
+            }
+            fclose(file1);
+        }
+        else if(list2==2){
+
+        }
+        else if(list2==3){
+
+        }
+        else{
+            printf("\nInvalid Input!!\n\n");
+        }
+    }
 	
 }
 void candidate(){
