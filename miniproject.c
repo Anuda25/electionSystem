@@ -91,7 +91,7 @@ void voter(){
 
                 // save voter details
                 file1 = fopen("voterdetails.txt", "a");
-                fprintf(file1, "%lli,%s,%s,%s\n", V_nic, V_name, V_district, V_pwd);
+                fprintf(file1, "%lli,%s,%s,%s\n", V_nic,V_pwd, V_name, V_district);
                 fclose(file1);
 
                 printf("\nRegistered Successfully!\n\n");
