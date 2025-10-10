@@ -94,7 +94,7 @@ void seewinner(){
         }
         int max=0;
         
-
+        //voter text  file read and max value 
 
 
 
