@@ -24,7 +24,7 @@ int main(){
         }
         else if(list1==3){
 			admin();
-			break;
+			continue;
         }
         else if(list1==4){
 			seewinner();
@@ -63,15 +63,40 @@ do{
     switch(list){
         case 1:
             printf("\n\n\n\nParty Registration\n");
+            printf("---------------------------------------------------------------\n");
+
+            FILE *fparty;
+            fparty=fopen("party.txt","a");
+            char name[50],mark[20],color[20];
+            printf("Enter party name  : ");
+            scanf("%s",name);
+            printf("Enter party mark  : ");
+            scanf("%s",mark);
+            printf("Enter party color : ");
+            scanf("%s",color);
+            fprintf(fparty,"%s,%s,%s\n",name,mark,color);
+            fclose(fparty);
+
+            printf("\nparty registration successful..........");
+
             break;
         case 2:
             printf("\n\n\n\ncandidate approval\n");
+            printf("---------------------------------------------------------------\n");
+
+            /*FILE *admin ;
+            char line[256];
+            admin=fopen("admin.txt","r");
+            while(fgets(line, sizeof(line), admin)){
+                sscanf(line,"%[^,],%[^,]",fusername,fpassword);}
+            fclose();*/
             break;
         case 3:
             printf("\n\n\n\nstart or end vote\n");
-            printf("1 = start vote\n2 = end vote\n3=registration open \nEnter your choice : ");
-            
+            printf("---------------------------------------------------------------\n");
+            printf("1 = start vote\n2 = end vote\n3=registration open \nEnter your choice : ");          
             scanf("%d",&list1);            // variable to check voting status 1=start 0=end 3=registration open
+            printf("---------------------------------------------------------------\n");
             if(list1==1){
                 printf("Voting started\n");
                 checkSTAT=1;
@@ -87,16 +112,14 @@ do{
             }else{
                 printf("Invalid Input!!\n");}
             break;
+        case 4:
+
         default:
-            printf("Invalid Input!!\n");
+            printf("-------------------Invalid Input!!----------------------------\n");
             break;
       } 
 }while(list!=4);
 
-
-
-	
-	
 }
 void seewinner(){
 	
