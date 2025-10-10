@@ -41,6 +41,76 @@ int main(){
     return 0;
 }
 void voter(){
+	int choice;
+    long long V_nic, fnic;
+    char V_name[50];
+    char V_district[50];
+    char V_pwd[20];
+    bool exists;
+
+    FILE *file1, *file2;
+    char line[256];
+
+    while (true) {
+        printf("1 = Registration\n2 = Login\n3 = Exit\n");
+        printf("Your Choice: ");
+        scanf("%d", &choice);
+
+        if (choice == 1) {
+            printf("Enter your NIC: ");
+            scanf("%lli", &V_nic);
+
+            // check if NIC already exists
+            exists = false;
+            file2 = fopen("voternic.txt", "r");
+            if (file2 != NULL) {
+                while (fgets(line, sizeof(line), file2)) {
+                    sscanf(line, "%lli", &fnic);
+                    if (fnic == V_nic) {
+                        exists = true;
+                        break;
+                    }
+                }
+                fclose(file2);
+            }
+
+            if (exists) {
+                printf("\nAlready Registered!\n\n");
+            } 
+            else {
+                // save NIC
+                file2 = fopen("voternic.txt", "a");
+                fprintf(file2, "%lli\n", V_nic);
+                fclose(file2);
+
+                // get other details
+                printf("Enter your Name: ");
+                scanf("%s", V_name);
+                printf("Enter your District: ");
+                scanf("%s", V_district);
+                printf("Enter your Password: ");
+                scanf("%s", V_pwd);
+
+                // save voter details
+                file1 = fopen("voterdetails.txt", "a");
+                fprintf(file1, "%lli,%s,%s,%s\n", V_nic,V_pwd, V_name, V_district);
+                fclose(file1);
+
+                printf("\nRegistered Successfully!\n\n");
+            }
+        } 
+        else if (choice == 2) {
+            printf("\nLogin feature coming soon...\n\n");
+        } 
+        else if (choice == 3) {
+            printf("Exiting program...\n");
+            break;
+        } 
+        else {
+            printf("Invalid choice! Try again.\n\n");
+        }
+    }
+    
 	
 	printf("Hello");
 }
