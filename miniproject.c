@@ -14,7 +14,7 @@ int main(){
 	    scanf("%d",&list1);
         if(list1==1){ //voter part
             voter();
-			break;
+			
         }
         else if(list1==2){//candidate part
 			candidate();
@@ -39,51 +39,76 @@ int main(){
     return 0;
 }
 void voter(){
-	int list2,c=0; //list2=store voter page user input c=count
-    FILE *file1;
-    file1=fopen("voterdetails.txt","w");
-    char V_nic[20] ="200415504199";
-    fprintf(file1,"%s",V_nic);
-    fclose(file1);
-	while(true){
-        printf("1=Registration\n2=login\n3=Exit\n");
-        printf("Your Choise: ");
-        scanf("%d",&list2);
-        if(list2==1){
+	int choice;
+    long long V_nic, fnic;
+    char V_name[50];
+    char V_district[50];
+    char V_pwd[20];
+    bool exists;
+
+    FILE *file1, *file2;
+    char line[256];
+
+    while (true) {
+        printf("1 = Registration\n2 = Login\n3 = Exit\n");
+        printf("Your Choice: ");
+        scanf("%d", &choice);
+
+        if (choice == 1) {
             printf("Enter your NIC: ");
-            scanf("%s",&V_nic);
+            scanf("%lli", &V_nic);
 
-            file1=fopen("voterdetails.txt","r");
-            char line[256],fnic[256]; //line=text_file_line,fnic=text_file_nic
-            while(fgets(line,sizeof(line),file1)){
-                sscanf(line, "%[^,]",fnic);
-                    
-                    int size=sizeof(V_nic);
-                    for(int i=0;i<size;i++){
-                        if(fnic[i]==V_nic[i]){
-                            c++;
-                        }
-                        if(c==12){
-                            printf("\nAlready Registered!!\n");
-                        }
-                        else{
-                            //Another part!!!!!
-                        }
+            // check if NIC already exists
+            exists = false;
+            file2 = fopen("voternic.txt", "r");
+            if (file2 != NULL) {
+                while (fgets(line, sizeof(line), file2)) {
+                    sscanf(line, "%lli", &fnic);
+                    if (fnic == V_nic) {
+                        exists = true;
+                        break;
                     }
-
+                }
+                fclose(file2);
             }
-            fclose(file1);
-        }
-        else if(list2==2){
 
-        }
-        else if(list2==3){
+            if (exists) {
+                printf("\nAlready Registered!\n\n");
+            } 
+            else {
+                // save NIC
+                file2 = fopen("voternic.txt", "a");
+                fprintf(file2, "%lli\n", V_nic);
+                fclose(file2);
 
-        }
-        else{
-            printf("\nInvalid Input!!\n\n");
+                // get other details
+                printf("Enter your Name: ");
+                scanf("%s", V_name);
+                printf("Enter your District: ");
+                scanf("%s", V_district);
+                printf("Enter your Password: ");
+                scanf("%s", V_pwd);
+
+                // save voter details
+                file1 = fopen("voterdetails.txt", "a");
+                fprintf(file1, "%lli,%s,%s,%s\n", V_nic, V_name, V_district, V_pwd);
+                fclose(file1);
+
+                printf("\nRegistered Successfully!\n\n");
+            }
+        } 
+        else if (choice == 2) {
+            printf("\nLogin feature coming soon...\n\n");
+        } 
+        else if (choice == 3) {
+            printf("Exiting program...\n");
+            break;
+        } 
+        else {
+            printf("Invalid choice! Try again.\n\n");
         }
     }
+    
 	
 }
 void candidate(){
