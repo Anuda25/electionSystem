@@ -1,2 +1,6 @@
 
+<<<<<<< HEAD
 200502803246,anu`123,anuda,matara
+=======
+200415504199,hasindu123,hasindu,matara
+>>>>>>> 060c57a04b38c5301f86cb6cc64245622950cf40

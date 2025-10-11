@@ -1,0 +1,5 @@
+unp,elephant,green
+jvp,compass,pink
+JVP,compass,green
+slpp,lotus,red
+npp,flower,red
