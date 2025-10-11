@@ -199,13 +199,13 @@ int fpassword(char filename[30]){
         char username[20],password[20],fusername[256],fpassword[256],line[256];
         printf("\n\n\n\nAdmin Panel\n");
         
-        printf("ENTER ADMIN USERNAME : ");
+        printf("ENTER YOUR USERNAME : ");
         scanf("%s",&username);
-        printf("ENTER ADMIN PASSWORD : ");
+        printf("ENTER YOUR PASSWORD : ");
         scanf("%s",&password);
 
         FILE *admin ;
-        admin=fopen("admin.txt","r");
+        admin=fopen(filename,"r");
         while(fgets(line, sizeof(line), admin)){
             sscanf(line,"%[^,],%[^,]",fusername,fpassword);
             if((strcmp(fpassword,password)==0)&&(strcmp(username,fusername)==0)){
