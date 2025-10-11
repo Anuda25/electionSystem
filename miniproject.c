@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<stdbool.h>
 #include<stdlib.h>
+#include <string.h>
 void voter();
 void candidate();
 void admin();
@@ -39,15 +40,63 @@ int main(){
 }
 void voter(){
 	
-	printf("Hello");
+	
 }
 void candidate(){
-	
-	
+
+    
+    char C_nic[256], F_nic[256]; //Candidate nic , registered txt file nic
+    char C_name[256], C_district[256], C_party[256]; //
+    bool exists = false;
+    FILE *N_C_list, *C_details; //File pointer
+    char line[256];
+
+    //Getting ID as a nic
+    printf("Enter Your ID Number: ");  
+    scanf("%s", C_nic);
+
+    //Check if ID already exists in permanent list
+    N_C_list = fopen("Nominated_Candidate_List.txt", "r");
+    if (N_C_list != NULL) {
+        while (fgets(line, sizeof(line), N_C_list)) {
+            sscanf(line, "%s", F_nic);
+            if (strcmp(F_nic, C_nic) == 0) {
+                exists = true;
+                break;
+            }
+        }
+        fclose(N_C_list);
+    }
+
+    if (exists) {
+        printf("\nAlready Registered!\n\n");
+    } else {
+
+        // Save NIC to permanent list
+        N_C_list = fopen("Nominated_Candidate_List.txt", "a");
+        fprintf(N_C_list, "%s\n", C_nic);
+        fclose(N_C_list);
+
+        // Get other details
+        printf("Enter your Name: ");
+        scanf("%s", C_name);
+        printf("Enter Your District: ");
+        scanf("%s", C_district);
+        printf("Enter Your Party: ");
+        scanf("%s", C_party);
+
+        // Save candidate details
+        C_details = fopen("Candidatedetails.txt", "a");
+        fprintf(C_details, "%s,%s,%s,%s\n", C_nic, C_name, C_district, C_party);
+        fclose(C_details);
+
+        printf("\nRegistration Successfully!\n\n");
+    }
 }
+    
+
 void admin(){
-	
-	
+
 }
 void seewinner(){
 	
