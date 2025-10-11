@@ -1,3 +1,0 @@
-admin1,Adm@123,
-admin2,adm!123,
-admin3,adm#123,
