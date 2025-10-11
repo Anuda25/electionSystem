@@ -16,7 +16,7 @@ int main(){
 	    scanf("%d",&list1);
         if(list1==1){
 			voter();
-			break;
+			
         }
         else if(list1==2){
 			candidate();
@@ -31,10 +31,11 @@ int main(){
 			break;
         }
         else if (list1==5){
+            printf("\n\nParliament Election Programe End....");
             exit(0);
         }
         else{
-            printf("\nInvalid Input!!\n\n");
+            printf("\nInvalid Input!!\nPlease try again....\n\n");
             
         }
     }
@@ -52,6 +53,7 @@ void voter(){
     char line[256];
 
     while (true) {
+        printf("\nVoter Section\n\n");
         printf("1 = Registration\n2 = Login\n3 = Exit\n");
         printf("Your Choice: ");
         scanf("%d", &choice);
@@ -75,7 +77,7 @@ void voter(){
             }
 
             if (exists) {
-                printf("\nAlready Registered!\n\n");
+                printf("\nAlready Registered!\nPlease try again....\n\n");
             } 
             else {
                 // save NIC
@@ -83,7 +85,7 @@ void voter(){
                 fprintf(file2, "%lli\n", V_nic);
                 fclose(file2);
 
-                // get other details
+                // get voter details
                 printf("Enter your Name: ");
                 scanf("%s", V_name);
                 printf("Enter your District: ");
@@ -91,7 +93,7 @@ void voter(){
                 printf("Enter your Password: ");
                 scanf("%s", V_pwd);
 
-                // save voter details
+                // save voter details in text file
                 file1 = fopen("voterdetails.txt", "a");
                 fprintf(file1, "%lli,%s,%s,%s\n", V_nic,V_pwd, V_name, V_district);
                 fclose(file1);
@@ -103,16 +105,16 @@ void voter(){
             printf("\nLogin feature coming soon...\n\n");
         } 
         else if (choice == 3) {
-            printf("Exiting program...\n");
+            printf("\nExiting voter Section...\n\n");
             break;
         } 
         else {
-            printf("Invalid choice! Try again.\n\n");
+            printf("\nInvalid Input!!\nPlease try again....\n\n");
         }
     }
     
 	
-	printf("Hello");
+
 }
 void candidate(){
 	
