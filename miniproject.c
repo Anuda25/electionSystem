@@ -7,12 +7,14 @@ void voter();
 void candidate();
 void admin();
 void seewinner();
+void display();
 int checkSTAT=3;  // variable to check voting status 1=start 0=end 3=not started
 int main(){
     int list1;  
+    display();
     while(true){
     	printf("1=Voter\n2=Candidate\n3=Admin\n4=See Winner\n5=Exit\n");
-	    printf("Your Choise: ");
+	    printf("\nYour Choise: ");
 	    scanf("%d",&list1);
         if(list1==1){
 			voter();
@@ -53,9 +55,11 @@ void voter(){
     char line[256];
 
     while (true) {
-        printf("\nVoter Section\n\n");
+        printf("\n---------------\n");
+        printf("Voter Section\n");
+        printf("---------------\n\n");
         printf("1 = Registration\n2 = Login\n3 = Exit\n");
-        printf("Your Choice: ");
+        printf("\nYour Choice: ");
         scanf("%d", &choice);
 
         if (choice == 1) {
@@ -106,6 +110,7 @@ void voter(){
         } 
         else if (choice == 3) {
             printf("\nExiting voter Section...\n\n");
+            display();
             break;
         } 
         else {
@@ -129,7 +134,10 @@ int list,list1;
         printf("password is incorrect\n");}
     }while(unlock!=1); 
 do{
-    printf("\n\n\n\n1 : Party Registration\n2 : candidate approval\n3 : start or end vote\n4 : Exit\n");
+    printf("\n---------------\n");
+    printf("Admin Section\n");
+    printf("---------------\n\n");
+    printf("1 : Party Registration\n2 : candidate approval\n3 : start or end vote\n4 : Exit\n");
     printf("Enter your choice :");
     scanf("%d",&list);
     switch(list){
@@ -199,7 +207,7 @@ void seewinner(){
 }
 int fpassword(char filename[30]){  
         char username[20],password[20],fusername[256],fpassword[256],line[256];
-        printf("\n\n\n\nAdmin Panel\n");
+        
         
         printf("ENTER YOUR USERNAME : ");
         scanf("%s",&username);
@@ -217,4 +225,13 @@ int fpassword(char filename[30]){
             }
         }    
         fclose(admin);
+}
+//main display part
+void display(){
+    printf("------------------\n");
+    printf("Parliment Election");
+    printf("\n\t2030");
+    printf("\n  Matara District\n");
+    printf("------------------\n\n");
+
 }
