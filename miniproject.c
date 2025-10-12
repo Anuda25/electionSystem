@@ -5,6 +5,7 @@
 
 int checkSTAT=3;                                    // variable to check voting status 1=start 0=end 3=not started
 char line[256];                                     //variable to candidate number
+int cno=001;                                       //candidate number
 int fpassword(char filename[]);                     //function for compare username password
 void readprint(char file[],char display[]);         //function to move file line for other file
 void title(char name[]);                            //function for title print
@@ -231,7 +232,12 @@ void admin(){
 
                     switch(list1){
                         case 1:
-                            readprint("candidate.txt","APPROVED SUCCESSFULL");
+                            FILE *candidate;
+                            candidate=fopen("candidate.txt","a");
+                            fprintf(candidate,"C00%d,%s",cno,line);
+                            printf("\n\n\n-------------------------------%s--------------------------------\n\n","APPROVED SUCCESSFULL");
+                            fclose(candidate);
+                            cno++;
                             break;
                         case 2:
                             readprint("rejectedcandidates.txt","REJECTED");
