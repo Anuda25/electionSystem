@@ -132,6 +132,10 @@ void candidate(){
     FILE *N_C_list, *C_details; //File pointer
     char line[256];
 
+    printf("\n======================================\n");
+    printf("\t|CANDIDATE REGISTRATION|\t\n");
+    printf("======================================\n\n");
+
     //Getting ID as a nic
     printf("Enter Your ID Number: ");  
     scanf("%s", C_nic);
