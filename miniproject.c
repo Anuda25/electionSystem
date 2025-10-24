@@ -45,7 +45,7 @@ int main(){
             exit(0);
         }
         else{
-            printf("\nInvalid Input!!\nPlease try again....\n\n");
+            printf("\nInvalid Input!!Please try again....\n\n");
             
         }
     }
@@ -303,7 +303,7 @@ void voter(){
                                     break;
 
                                 default:
-                                    printf("...INVALID INPUT...\n...Please try again...\n\n");
+                                    printf("...INVALID INPUT......Please try again...\n\n");
                                     break;
                                 }
         } 
@@ -324,7 +324,7 @@ void candidate(){
     
     char line[256];
     int choice = 0 ;
-
+    
     while(true){
         printf("\n======================================\n");
         printf("\t|CANDIDATE SECTION|\t\n");
@@ -334,12 +334,13 @@ void candidate(){
         scanf("%d", &choice );
 
         if(choice == 1){
+            bool exists = false;
             printf("\n======================================\n");
             printf("\tCANDIDATE REGISTRATION\t\n");
             printf("======================================\n\n");
             //Getting ID as a nic
             printf("Enter Your ID Number: ");  
-            scanf("%s", &C_nic);
+            scanf("%s", C_nic);
 
             FILE *N_C_list, *C_details; //File pointer
 
@@ -451,26 +452,21 @@ void candidate(){
                         }
                     }
                     fclose(C_details);
-
                     printf("\n\n1.Exitt\t: ");
                     scanf("%d", &choice );
+                    break;  
+                default:
+                    printf("-----Invalid Input! Please Try  Again-----\n\n");
                     break;
- 
-                case 2 :
-                    int check;
-                    
-                    printf("\n======================================\n");
-                    printf("\tCasting Your Vote\t\n");
-                    printf("======================================\n\n");
-                           
             }
         }
         else if(choice == 3){
             printf("\n-----Exiting Candidate Section-----\n\n");
+            display();
             break;
         }
         else{
-            printf("\nInvalid Input!!\nPlease try again....\n\n");
+            printf("\n-----Invalid Input!!\nPlease try again-----\n\n");
         }
     }  
 }
