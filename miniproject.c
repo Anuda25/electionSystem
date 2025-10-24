@@ -318,58 +318,163 @@ void voter(){
     }	
 }
 void candidate(){  
-    char C_nic[256], F_nic[256]; //Candidate nic , registered txt file nic
-    char C_name[256], C_district[256], C_party[256]; //
+    char C_nic[30], F_nic[30]; //Candidate nic , registered txt file nic
+    char C_name[50], C_district[50], C_party[50] , C_password[50]; //
     bool exists = false;
-    FILE *N_C_list, *C_details; //File pointer
+    
     char line[256];
+    int choice = 0 ;
 
-    printf("\n======================================\n");
-    printf("\t|CANDIDATE REGISTRATION|\t\n");
-    printf("======================================\n\n");
+    while(true){
+        printf("\n======================================\n");
+        printf("\t|CANDIDATE SECTION|\t\n");
+        printf("======================================\n\n");
+        printf("1 = Registration\n2 = Login\n3 = Exit\n");
+        printf("\nYour Choice: ");
+        scanf("%d", &choice );
 
-    //Getting ID as a nic
-    printf("Enter Your ID Number: ");  
-    scanf("%s", C_nic);
+        if(choice == 1){
+            printf("\n======================================\n");
+            printf("\tCANDIDATE REGISTRATION\t\n");
+            printf("======================================\n\n");
+            //Getting ID as a nic
+            printf("Enter Your ID Number: ");  
+            scanf("%s", &C_nic);
 
-    //Check if ID already exists in permanent list
-    N_C_list = fopen("Nominated_Candidate_List.txt", "r");
-    if (N_C_list != NULL) {
-        while (fgets(line, sizeof(line), N_C_list)) {
-            sscanf(line, "%s", F_nic);
-            if (strcmp(F_nic, C_nic) == 0) {
-                exists = true;
-                break;
+            FILE *N_C_list, *C_details; //File pointer
+
+            //Check if ID already exists in permanent list
+            N_C_list = fopen("Nominated_Candidate_List.txt", "r");
+            if (N_C_list != NULL) {
+                while (fgets(line, sizeof(line), N_C_list)) {
+                    sscanf(line, "%s", F_nic);
+                    if (strcmp(F_nic, C_nic) == 0) {
+                        exists = true;
+                        break;
+                    }
+                }
+                fclose(N_C_list);
+            }
+            else{
+                printf("-----File Openning Error------");
+            }
+            if (exists) {
+                printf("\n----Already Registered!Please Log into Your Account----\n\n");
+            } else {
+
+                // Save NIC to permanent list
+                N_C_list = fopen("Nominated_Candidate_List.txt", "a");
+                fprintf(N_C_list, "%s\n", C_nic);
+                fclose(N_C_list);
+
+                // Get other details
+                printf("Enter your Name: ");
+                scanf("%s", C_name);
+                printf("Enter Your Password: ");
+                scanf("%s", C_password );
+                printf("Enter Your District: ");
+                scanf("%s", C_district);
+                printf("Enter Your Party: ");
+                scanf("%s", C_party);
+
+                // Save candidate details
+                C_details = fopen("Candidatedetails.txt", "a");
+                fprintf(C_details, "%s,%s,%s,%s,%s\n", C_nic, C_name, C_password,C_district, C_party);
+                fclose(C_details);
+
+                printf("\n-----Registration Successfully!-----\n\n");
+             }
+        }
+        else if(choice == 2){
+            char username[30] ;
+            char password[30] ;
+            int in = 0 ;
+            printf("\n======================================\n");
+            printf("\tCANDIDATE LOGIN\t\n");
+            printf("======================================\n\n");
+
+            do{
+                printf("\nEnter the Username: ");
+                scanf("%s" , username);
+                printf("Enter the Password: ");
+                scanf("%s" , password);
+
+                FILE *C_details ;
+
+                C_details = fopen("Candidatedetails.txt" , "r");
+                if(C_details == NULL){
+                    printf("-----Opening Error ! File Candidatedetails.txt-----");
+                }
+                else{
+                    int x = 0 ;
+                    while(fgets(line,sizeof(line),C_details)){
+                        sscanf(line, "%[^,],%[^,],%[^,],%[^,],%[^,]", C_nic , C_name , C_password , C_district , C_party);
+                        if ((strcmp(C_nic, username) == 0) && (strcmp(C_password, password) == 0)){
+                                x = 1 ;
+                                break;
+                        }
+                    }
+                    fclose(C_details);
+                    if(x==1){
+                        printf("\n----Login Succesfull----");
+                        in = 1;
+                    }
+                    else{
+                        printf("\n----Incorrect Password or Username-----\n");
+                    }
+                }
+            }while(in == 0 );
+            printf("\n======================================\n");
+            printf("\tDASHBOARD\t\n");
+            printf("======================================\n\n");
+            int dashchoice ;
+
+            printf("1.View Profile\n2.Cast Your Voting\n3.Exit");
+            printf("\n\nYour Choice\t:");
+            scanf("%d", &dashchoice);
+            switch(dashchoice){
+                case 1 :
+                    printf("\n======================================\n");
+                    printf("\tPROFILE DETAILS\t\n");
+                    printf("======================================\n\n");
+
+                    FILE * C_details ;
+                    C_details = fopen("Candidatedetails.txt" , "r"); 
+                    if(C_details == NULL){
+                        printf("Opening Error ! File Candidatedetails.txt");
+                    }
+                    while(fgets(line,sizeof(line),C_details)){
+                        sscanf(line, "%[^,],%[^,],%[^,],%[^,],%[^,]", C_nic , C_name , C_password , C_district , C_party);
+                        if ((strcmp(C_password, password) == 0)&&(strcmp(C_nic, username) ==0 )){
+                            printf("\nNIC\t\t%s\nName\t\t%s\nPassword\t%s\nDistrict\t%s\nParty\t\t%s" , C_nic , C_name , C_password , C_district , C_party);
+                            break;
+                        }
+                    }
+                    fclose(C_details);
+
+                    printf("\n\n1.Exitt\t: ");
+                    scanf("%d", &choice );
+                    break;
+ 
+                case 2 :
+                    int check;
+                    
+                    printf("\n======================================\n");
+                    printf("\tCasting Your Vote\t\n");
+                    printf("======================================\n\n");
+                           
             }
         }
-        fclose(N_C_list);
-    }
-
-    if (exists) {
-        printf("\nAlready Registered!\n\n");
-    } else {
-
-        // Save NIC to permanent list
-        N_C_list = fopen("Nominated_Candidate_List.txt", "a");
-        fprintf(N_C_list, "%s\n", C_nic);
-        fclose(N_C_list);
-
-        // Get other details
-        printf("Enter your Name: ");
-        scanf("%s", C_name);
-        printf("Enter Your District: ");
-        scanf("%s", C_district);
-        printf("Enter Your Party: ");
-        scanf("%s", C_party);
-
-        // Save candidate details
-        C_details = fopen("Candidatedetails.txt", "a");
-        fprintf(C_details, "%s,%s,%s,%s\n", C_nic, C_name, C_district, C_party);
-        fclose(C_details);
-
-        printf("\nRegistration Successfully!\n\n");
-    }
+        else if(choice == 3){
+            printf("\n-----Exiting Candidate Section-----\n\n");
+            break;
+        }
+        else{
+            printf("\nInvalid Input!!\nPlease try again....\n\n");
+        }
+    }  
 }
+ 
 void admin(){        
     int list,list1;
     int unlock;
@@ -611,7 +716,7 @@ void readprint(char file[],char display[]){
 void display(){
     printf("===========================================================\n");
     printf("\t\tParliment Election");
-    printf("\n\t\t   2030");
+    printf("\n\t\t\t2030");
     printf("\n\t\t Matara District\n");
     printf("===========================================================\n\n\n");
 
