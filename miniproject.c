@@ -123,7 +123,7 @@ void voter(){
             printf("\n====================");
             do{
 
-                printf("\nEnter the username:");
+                printf("\n\nEnter the username: ");
                 scanf("%s",&username);
                 printf("Enter the password: ");
                 scanf("%s",&password);
@@ -159,7 +159,8 @@ void voter(){
                     int choice,choice2;
                     char v_pchoice[50];
                     char c_vote[50];
-                    printf("1.  Your Profile Details\n2. Cast Your Voting\n3. Exit");
+                    char v_cno[50];
+                    printf("1. Your Profile Details\n2. Cast Your Voting\n3. Exit");
                     printf("\n\nYour Choice\t:");
                     scanf("%d",&choice);
                     switch (choice){
@@ -175,7 +176,10 @@ void voter(){
                             char V_district[50];
                             
                         temp= fopen("voterdetails.txt","r");
-                        
+                        if (temp == NULL) {
+                        printf("\n  Error   cannot open file 'voterdetails.txt'\n");
+                    
+                        }
                         while(fgets(line, sizeof(line), temp)){
                         
                             sscanf(line,"%[^,],%[^,],%[^,],%[^,]",fusername,fpassword,fname,fdistrict);
@@ -192,8 +196,7 @@ void voter(){
                         // ...CAST YOUR VOTE...
                         case 2: {
                             char votedfname[50];
-                            int voteno=0;
-                            
+                            int check=0;
 
                             char party[50][50];
                             int partyCount = 0;  //party.txt file enter party  count
@@ -203,6 +206,10 @@ void voter(){
                             printf("\n=======================");
                             FILE *stat;
                             stat=fopen("status.txt","r");
+                            if (stat == NULL) {
+                                printf("\n  Error   cannot open file 'status.txt'\n");
+                    
+                            }
                             fscanf(stat,"%d",&checkSTAT);
                             fclose(stat);
                             if(checkSTAT==1){
@@ -213,7 +220,7 @@ void voter(){
                                     
                                         while (fgets(line, sizeof(line), file2)) {
                                         line[strcspn(line, "\r\n")] = '\0';      //new line remove
-                                        sscanf(line,"%[^,],%[^,],%[^,],%[^,]",v_pchoice,c_vote,fdistrict,votedfname);
+                                        sscanf(line,"%[^,],%[^,],%[^,],%[^,],%[^,]",v_pchoice,c_vote,v_cno,fdistrict,votedfname);
                                         if(strcmp(votedfname,username) ==0){
                                         uservoted=1;
                                         break;
@@ -231,6 +238,9 @@ void voter(){
                                             char pname[50],pmark[20],pcolor[20];
                                             
                                             fparty=fopen("party.txt","r");
+                                            if (file1 == NULL) {
+                                                printf("\n  Error   cannot open file 'party.txt'\n");
+                                            }
                                             while (fgets(line, sizeof(line), fparty)) {  //party list line count
                                                     
                                                     line[strcspn(line, "\n")] = '\0';
@@ -253,14 +263,18 @@ void voter(){
                                                 fdistrict[strcspn(fdistrict, "\n")] = '\0';
 
                                                 FILE *candidate;
-                                                char  cnumber[20],cnic[20],cname[20],cdistrict[50],cparty[50];
+                                                char  cnumber[20],cnic[20],cname[20],c_password[20],cdistrict[50],cparty[50];
                                                 int candidatecount=0;
                                                 
-                                                candidate=fopen("Nominated_Candidatedetails.txt","r");
+                                                candidate=fopen("Candidate.txt","r");
                                                 printf("\n\n....%s list(%s :)\n\n",v_pchoice,fdistrict);
+                                                if (file1 == NULL) {
+                                                    printf("\n  Error   cannot open file 'candidate.txt'\n");
+                    
+                                                }
                                                 
                                                 while(fgets(line,sizeof(line),candidate)){
-                                                    sscanf(line,"%[^,],%[^,],%[^,],%[^,],%[^,]",cnumber,cnic,cname,cdistrict,cparty);                                        
+                                                    sscanf(line,"%[^,],%[^,],%[^,],%[^,],%[^,],%[^,]",cnumber,cnic,cname,c_password,cdistrict,cparty);                                        
                                                     
                                                     line[strcspn(line, "\n")] = '\0';  //new line remove
                                                     cdistrict[strcspn(cdistrict, "\n")] = '\0';
@@ -268,27 +282,45 @@ void voter(){
 
                                                     if((strcmp(fdistrict,cdistrict) == 0) && (strcmp(v_pchoice,cparty) == 0)){ 
                                                         candidatecount++;
-                                                        printf("\n\t%d. %s\t%s",candidatecount,cname,cnumber);
+                                                        printf("\n\t%d. %s\t-%s",candidatecount,cname,cnumber);
                                                     }
                                                 }
                                                 if(candidatecount==0){
                                                     
                                                     printf("....No candidates found for ths party in you district....\n\n");
                                                 break;
-                                                }
-                                                fclose(candidate);
-                                            
-                                                printf("\n\n\nCast Your Voted Name:");
-                                                scanf("%s",c_vote); 
+                                                }fclose(candidate);
                                                 
-                                                    //voting file print
-                                                    FILE *vote; 
-                                                    vote=fopen("voting.txt","a");
-                                                    voteno++;
-                                                    fprintf(vote,"%s,%s,%s,%s\n",v_pchoice,c_vote,fdistrict,fusername);
-                                                    printf("\n\n....YOUR VOTE SUCCESSFUL...\n");
-                                                    fclose(vote);
-                                        }
+                                                
+                                                printf("\n\n\nCast Your Voted Name: ");
+                                                scanf("%s",c_vote); 
+                                                printf("\nCast Your Voter Number: ");
+                                                scanf("%s",v_cno);
+                                                candidate=fopen("Candidate.txt","r");
+                                                while(fgets(line,sizeof(line),candidate)){
+                                                    sscanf(line,"%[^,],%[^,],%[^,],%[^,],%[^,],%[^,]",cnumber,cnic,cname,c_password,cdistrict,cparty);                                        
+                                                    
+                                                   line[strcspn(line, "\n")] = '\0';  //new line remove
+                                                 
+                                                if((strcmp(c_vote,cname) == 0) && (strcmp(v_cno,cnumber) == 0)){ 
+                                                     check=1;
+                                                    }
+                                                }
+
+                                                    if(check==1){ 
+                                                        //voting file print
+                                                        FILE *vote; 
+                                                        vote=fopen("voting.txt","a");
+                                                        voteno++;
+                                                        fprintf(vote,"%s,%s,%s,%s,%s\n",v_pchoice,c_vote,v_cno,fdistrict,fusername);
+                                                        printf("\n\n....YOUR VOTE SUCCESSFUL...\n");
+                                                        printf("=============================\n");
+                                                        fclose(vote);
+                                                    }else{
+                                                        printf("\n\n!!! Your candidate Name and Number do not Match.\n!! Please try again !!!\n\n");
+                                                     }
+                                                 fclose(candidate);
+                                     }
                                     
                                         
                                         
@@ -547,12 +579,12 @@ void admin(){
                 list1=0;
                 title("CANDIDATE APPROVAL");
                 FILE *ctemp;
-                char cnic[20],cname[20],cdistrict[20],cparty[20];
+                char cnic[20],cname[20],cdistrict[20],cparty[20],cpassword[20];
                 ctemp=fopen("candidatedetails.txt","r");
                 
                 while(fgets(line, sizeof(line), ctemp)){
                     
-                    sscanf(line,"%[^,],%[^,],%[^,],%[^,]",cnic,cname,cdistrict,cparty);
+                    sscanf(line,"%[^,],%[^,],%[^,],%[^,],%[^,]",cnic,cname,cpassword,cdistrict,cparty);
                     printf("Candidate NIC \t\t: %s\nCandidate name \t\t: %s\nCandidate district \t: %s\nCandidate party \t: %s\n",cnic,cname,cdistrict,cparty);
                     printf("---------------------------------------------------------------\n");
                     printf("1 = approve\n2 = reject\n3 = pass\nEnter your choice : ");
@@ -623,15 +655,16 @@ void seewinner(){
     stat=fopen("status.txt","r");
     fscanf(stat,"%d",&checkSTAT);
     fclose(stat);
-    if(checkSTAT==2){
+    if(checkSTAT==0){
        
          
-            char v_party[50],v_candidate[50],v_district[50],v_userid[50];
+            char v_party[50],v_candidate[50],v_candidateno[50],v_district[50],v_userid[50];
             char line[500];
 
             char districts[MAX][50];
             char parties[MAX][50];
             char candidates[MAX][50];
+            char candidateno[MAX][50];
             int votes[MAX] = {0};
             int count = 0;
 
@@ -644,12 +677,13 @@ void seewinner(){
 
             while (fgets(line, sizeof(line), winner)) {
                 
-                sscanf(line, "%[^,],%[^,],%[^,],%[^,]",v_party,v_candidate,v_district,v_userid);
+                sscanf(line, "%[^,],%[^,],%[^,],%[^,],%[^,]",v_party,v_candidate,v_candidateno,v_district,v_userid);
                 
                 int out = 0;
                 for (int i = 0; i < count; i++) {
                     if (strcmp(districts[i],v_district) == 0 &&
                         strcmp(parties[i],v_party) == 0 &&
+                        strcmp(candidateno[i],v_candidateno) == 0 &&
                         strcmp(candidates[i],v_candidate) == 0) {
                         votes[i]++;
                         out = 1;
@@ -660,6 +694,7 @@ void seewinner(){
                 if (!out) {
                     strcpy(districts[count],v_district);
                     strcpy(parties[count],v_party);
+                    strcpy(candidateno[count],v_candidateno);
                     strcpy(candidates[count],v_candidate);
                     votes[count] = 1;
                     count++;
@@ -695,10 +730,10 @@ void seewinner(){
                     }
 
                     // Print winning candidate and district
-                    printf("%s | %s | %s Votes: %d\n",districts[winnerIndex],parties[winnerIndex],candidates[winnerIndex],votes[winnerIndex]);
+                    printf("%s | %s | %s - %s Votes: %d\n",districts[winnerIndex],parties[winnerIndex],candidateno[winnerIndex],candidates[winnerIndex],votes[winnerIndex]);
                     FILE *fwinner;
                     fwinner=fopen("seewinner.txt","a");
-                    fprintf(fwinner,"%s,%s,%s,%d\n",districts[winnerIndex],parties[winnerIndex],candidates[winnerIndex],votes[winnerIndex]);
+                    fprintf(fwinner,"%s,%s,%s,%s,%d\n",districts[winnerIndex],parties[winnerIndex],candidateno[winnerIndex],candidates[winnerIndex],votes[winnerIndex]);
                     fclose(fwinner);
                 }
             }
@@ -753,3 +788,5 @@ void display(){
     printf("===========================================================\n\n\n");
 
 }
+
+//THIS IS THE END.....
