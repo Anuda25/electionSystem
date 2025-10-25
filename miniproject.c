@@ -425,6 +425,7 @@ void candidate(){
                     }
                 }
             }while(in == 0 );
+            while(1){
             printf("\n======================================\n");
             printf("\tDASHBOARD\t\n");
             printf("======================================\n\n");
@@ -433,8 +434,7 @@ void candidate(){
             printf("1.View Profile\n2.See Approvel\n3.Exit");
             printf("\n\nYour Choice\t:");
             scanf("%d", &dashchoice);
-            switch(dashchoice){
-                case 1 :
+            if(dashchoice == 1){
                     printf("\n======================================\n");
                     printf("\tPROFILE DETAILS\t\n");
                     printf("======================================\n\n");
@@ -452,13 +452,14 @@ void candidate(){
                         }
                     }
                     fclose(C_details);
-                    printf("\n\n1.Exitt\t: ");
+                    printf("\n\n1.Exit\t: ");
                     scanf("%d", &choice );
-                    break; 
-                case 2:
+                    continue; 
+            }
+                else if(dashchoice==2){
                     FILE * Approved  ;
                     Approved = fopen("candidate.txt" , "r");
-                    if (C_details == NULL){
+                    if (Approved == NULL){
                         printf("-----File Opening Error-----");
                     }
                     else{
@@ -469,7 +470,7 @@ void candidate(){
                                 break;
                             }
                         }
-                        fclose(C_details);
+                        fclose(Approved);
                     }
                     if (exists) {
                         printf("\n----Congrats!You Have Nominated For the  Election----\n\n");
@@ -477,13 +478,13 @@ void candidate(){
                     else {
                         printf("-----Registration Pending-----");
                     }
-                    break;
-                default:
+                }
+                else{
                     printf("-----Invalid Input! Please Try  Again-----\n\n");
-                    break;
+                    break;   
             }
-            
         }
+    }
         else if(choice == 3){
             printf("\n-----Exiting Candidate Section-----\n\n");
             display();
