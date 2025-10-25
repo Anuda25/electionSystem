@@ -329,7 +329,7 @@ void candidate(){
         printf("\n======================================\n");
         printf("\t|CANDIDATE SECTION|\t\n");
         printf("======================================\n\n");
-        printf("1 = Registration\n2 = Login\n3 = Exit\n");
+        printf("1 = Registration\n2 = Login\n3 = Exit\n"); //Candidate Main Menu
         printf("\nYour Choice: ");
         scanf("%d", &choice );
 
@@ -389,6 +389,7 @@ void candidate(){
             char username[30] ;
             char password[30] ;
             int in = 0 ;
+            // Candidate Login Section
             printf("\n======================================\n");
             printf("\tCANDIDATE LOGIN\t\n");
             printf("======================================\n\n");
@@ -406,6 +407,7 @@ void candidate(){
                     printf("-----Opening Error ! File Candidatedetails.txt-----");
                 }
                 else{
+                    //Check username & password are valid or not
                     int x = 0 ;
                     while(fgets(line,sizeof(line),C_details)){
                         sscanf(line, "%[^,],%[^,],%[^,],%[^,],%[^,]", C_nic , C_name , C_password , C_district , C_party);
@@ -415,6 +417,7 @@ void candidate(){
                         }
                     }
                     fclose(C_details);
+                    //if username and password correct display login success or  not
                     if(x==1){
                         printf("\n----Login Succesfull----\n");
                         in = 1;
@@ -424,6 +427,7 @@ void candidate(){
                     }
                 }
             }while(in == 0 );
+            //After login completetd show dashboard menu
             while(1){
             printf("\n======================================\n");
             printf("\tDASHBOARD\t\n");
@@ -443,6 +447,7 @@ void candidate(){
                     if(C_details == NULL){
                         printf("Opening Error ! File Candidatedetails.txt");
                     }
+                    // Show User Details
                     while(fgets(line,sizeof(line),C_details)){
                         sscanf(line, "%[^,],%[^,],%[^,],%[^,],%[^,]", C_nic , C_name , C_password , C_district , C_party);
                         if ((strcmp(C_password, password) == 0)&&(strcmp(C_nic, username) ==0 )){
@@ -456,6 +461,7 @@ void candidate(){
                     continue; 
             }
                 else if(dashchoice==2){
+                    // Check User Registration Approved or not by the admin with "candidate"
                     exists = false ;
                     FILE * Approved  ;
                     Approved = fopen("candidate.txt" , "r");
@@ -463,6 +469,7 @@ void candidate(){
                         printf("-----File Opening Error-----");
                     }
                     else{
+                        // Check user Approvel using nic & username
                         while (fgets(line, sizeof(line), Approved)){
                             sscanf(line, "%s", C_nic);
                             if(strcmp(C_nic,username)==0){
