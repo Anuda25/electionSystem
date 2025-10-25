@@ -362,15 +362,14 @@ void candidate(){
             if (exists) {
                 printf("\n----Already Registered!Please Log into Your Account----\n\n");
             } else {
-
                 // Save NIC to permanent list
                 N_C_list = fopen("Nominated_Candidate_List.txt", "a");
-                fprintf(N_C_list, "%s\n", C_nic);
+                fprintf(N_C_list, "%s", C_nic);
                 fclose(N_C_list);
 
                 // Get other details
                 printf("Enter your Name: ");
-                scanf("%s", C_name);
+                scanf(" %[^\n]", C_name);
                 printf("Enter Your Password: ");
                 scanf("%s", C_password );
                 printf("Enter Your District: ");
@@ -417,7 +416,7 @@ void candidate(){
                     }
                     fclose(C_details);
                     if(x==1){
-                        printf("\n----Login Succesfull----");
+                        printf("\n----Login Succesfull----\n");
                         in = 1;
                     }
                     else{
@@ -476,7 +475,7 @@ void candidate(){
                         printf("\n----Congrats!You Have Nominated For the  Election----\n\n");
                     } 
                     else {
-                        printf("-----Registration Pending-----");
+                        printf("-----Registration Pending-----\n");
                     }
                 }
                 else{
