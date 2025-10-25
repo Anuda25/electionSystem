@@ -100,7 +100,7 @@ void voter(){
 
                 // get voter details
                 printf("Enter your Name: ");
-                scanf("%s", V_name);
+                scanf(" %[^\n]", V_name);
                 printf("Enter your District: ");
                 scanf("%s", V_district);
                 printf("Enter your Password: ");
