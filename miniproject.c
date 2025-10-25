@@ -291,7 +291,7 @@ void voter(){
                                         }
                                     
                                         
-                                        
+                                    
                                     }else{
                                         printf("\n\n... voting time pending ...\n");
                                     }
@@ -364,7 +364,7 @@ void candidate(){
             } else {
                 // Save NIC to permanent list
                 N_C_list = fopen("Nominated_Candidate_List.txt", "a");
-                fprintf(N_C_list, "%s", C_nic);
+                fprintf(N_C_list, "%s\n", C_nic);
                 fclose(N_C_list);
 
                 // Get other details
@@ -456,6 +456,7 @@ void candidate(){
                     continue; 
             }
                 else if(dashchoice==2){
+                    exists = false ;
                     FILE * Approved  ;
                     Approved = fopen("candidate.txt" , "r");
                     if (Approved == NULL){
