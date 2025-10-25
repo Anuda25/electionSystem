@@ -513,15 +513,30 @@ void admin(){
         switch(list){
             case 1:
                 title("PARTY REGISTRATION");
-                FILE *fparty;
-                fparty=fopen("party.txt","a");
-                char name[50],mark[20],color[20];
+                char name[50],mark[20],color[20],fname[20];
+                FILE *admin ;
+                admin=fopen("party.txt","r");
+                do{
                 printf("Enter party name  : ");
                 scanf("%s",name);
                 printf("Enter party mark  : ");
                 scanf("%s",mark);
                 printf("Enter party color : ");
                 scanf("%s",color);
+                
+                
+                
+                while(fgets(line, sizeof(line), admin)){
+                    sscanf(line,"%[^,]",fname);
+                }if(strcmp(fname,name)==0)
+                    printf("...................this party is already registered.................\n");
+            }while(strcmp(fname,name)==0);
+            
+           
+        fclose(admin);
+
+                FILE *fparty;
+                fparty=fopen("party.txt","a");
                 fprintf(fparty,"%s,%s,%s\n",name,mark,color);
                 fclose(fparty);
 
@@ -552,7 +567,7 @@ void admin(){
                     switch(list1){
                         case 1:{
                             FILE *candidate;
-                            candidate=fopen("Nominated_Candidatedetails.txt","a");
+                            candidate=fopen("candidate.txt","a");
                             fprintf(candidate,"C00%d,%s",cno,line);
                             printf("\n\n\n-------------------------------%s--------------------------------\n\n","APPROVED SUCCESSFULL");
                             fclose(candidate);
