@@ -30,7 +30,7 @@ int main(){
         }
         else if(list1==2){
 			candidate();
-			break;
+            continue;
         }
         else if(list1==3){
 			admin();
@@ -430,7 +430,7 @@ void candidate(){
             printf("======================================\n\n");
             int dashchoice ;
 
-            printf("1.View Profile\n2.Cast Your Voting\n3.Exit");
+            printf("1.View Profile\n2.See Approvel\n3.Exit");
             printf("\n\nYour Choice\t:");
             scanf("%d", &dashchoice);
             switch(dashchoice){
@@ -454,11 +454,35 @@ void candidate(){
                     fclose(C_details);
                     printf("\n\n1.Exitt\t: ");
                     scanf("%d", &choice );
-                    break;  
+                    break; 
+                case 2:
+                    FILE * Approved  ;
+                    Approved = fopen("candidate.txt" , "r");
+                    if (C_details == NULL){
+                        printf("-----File Opening Error-----");
+                    }
+                    else{
+                        while (fgets(line, sizeof(line), Approved)){
+                            sscanf(line, "%s", C_nic);
+                            if(strcmp(C_nic,username)==0){
+                                exists = true ;
+                                break;
+                            }
+                        }
+                        fclose(C_details);
+                    }
+                    if (exists) {
+                        printf("\n----Congrats!You Have Nominated For the  Election----\n\n");
+                    } 
+                    else {
+                        printf("-----Registration Pending-----");
+                    }
+                    break;
                 default:
                     printf("-----Invalid Input! Please Try  Again-----\n\n");
                     break;
             }
+            
         }
         else if(choice == 3){
             printf("\n-----Exiting Candidate Section-----\n\n");
@@ -481,8 +505,6 @@ void admin(){
         if (unlock!=1){
         printf("..........username or password is incorrect...........\n");}
     }while(unlock!=1); 
-    
-    
     do{
         printf("\n\n\n1 : Party Registration\n2 : candidate approval\n3 : start or end vote\n4 : Exit\n");
         printf("Enter your choice :");
@@ -650,7 +672,6 @@ void seewinner(){
                     int maxVotes = votes[i];
                     int winnerIndex = i;
 
-                    
                     for (int k = i + 1; k < count; k++) {
                         if (strcmp(districts[k], districts[i]) == 0 && votes[k] > maxVotes) {
                             maxVotes = votes[k];
