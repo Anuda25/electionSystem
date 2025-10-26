@@ -350,7 +350,7 @@ void voter(){
     }	
 }
 void candidate(){  
-    char C_nic[30], F_nic[30]; //Candidate nic , registered txt file nic
+    char C_nic[30], F_nic[30],C_no[10]; //Candidate nic , registered txt file nic
     char C_name[50], C_district[50], C_party[50] , C_password[50]; //
     bool exists = false;
     
@@ -432,8 +432,10 @@ void candidate(){
                 printf("Enter the Password: ");
                 scanf("%s" , password);
 
-                FILE *C_details ;
+                FILE *C_details,*AC_details,*RC_details ;
 
+                AC_details = fopen("candidate.txt" , "r");
+                RC_details = fopen("rejectedcandidates.txt" , "r");
                 C_details = fopen("Candidatedetails.txt" , "r");
                 if(C_details == NULL){
                     printf("-----Opening Error ! File Candidatedetails.txt-----");
@@ -448,7 +450,23 @@ void candidate(){
                                 break;
                         }
                     }
+                    while(fgets(line,sizeof(line),AC_details)){
+                        sscanf(line, "%[^,],%[^,],%[^,],%[^,],%[^,],%[^,]",C_no, C_nic , C_name , C_password , C_district , C_party);
+                        if ((strcmp(C_nic, username) == 0) && (strcmp(C_password, password) == 0)){
+                                x = 1 ;
+                                break;
+                        }
+                    }
+                    while(fgets(line,sizeof(line),RC_details)){
+                        sscanf(line, "%[^,],%[^,],%[^,],%[^,],%[^,]",C_nic , C_name , C_password , C_district , C_party);
+                        if ((strcmp(C_nic, username) == 0) && (strcmp(C_password, password) == 0)){
+                                x = 1 ;
+                                break;
+                        }
+                    }
                     fclose(C_details);
+                    fclose(AC_details);
+                    fclose(RC_details);
                     //if username and password correct display login success or  not
                     if(x==1){
                         printf("\n----Login Succesfull! Welcome, %s----\n", C_name);
@@ -504,18 +522,34 @@ void candidate(){
                     else{
                         // Check user Approvel using nic & username
                         while (fgets(line, sizeof(line), Approved)){
-                            sscanf(line, "%s", C_nic);
+                            sscanf(line, "%[^,],%[^,],%[^,],%[^,],%[^,],%[^,]",C_no, C_nic , C_name , C_password , C_district , C_party);
                             if(strcmp(C_nic,username)==0){
-                                exists = true ;
+                                printf("\n----Congrats!You Have Nominated For the  Election----\n\n");
                                 break;
                             }
                         }
                         fclose(Approved);
                     }
-                    if (exists) {
-                        printf("\n----Congrats!You Have Nominated For the  Election----\n\n");
-                    } 
-                    else {
+
+                    FILE * rejected  ;
+                    rejected = fopen("rejectedcandidates.txt" , "r");
+                    if (rejected == NULL){
+                        printf("-----File Opening Error-----");
+                    }
+                    else{
+                        // Check user Rejecting using nic & username
+                        while (fgets(line, sizeof(line), rejected)){
+                            sscanf(line, "%[^,],%[^,],%[^,],%[^,],%[^,]", C_nic , C_name , C_password , C_district , C_party);
+                            if(strcmp(C_nic,username)==0){
+                                printf("\n----Sorry!You Have Rejected For the  Election----\n\n"); ;
+                                break;
+                            }
+                        }
+                        fclose(rejected);
+                    }
+
+
+                    if (exists== false) {
                         printf("\n-----Registration Pending-----\n");
                     }
                 }
@@ -632,7 +666,7 @@ void admin(){
             case 3:
                 list1=0;
                 title("START OR END VOTE");
-                printf("1 = start vote\n2 = end vote\n3=registration open \nEnter your choice : ");          
+                printf("1 = start vote\n2 = end vote\n3=reset system \nEnter your choice : ");          
                 scanf("%d",&list1);            // variable to check voting status 1=start 0=end 3=registration open
                 FILE *status;
                 status=fopen("status.txt","w");
@@ -643,8 +677,29 @@ void admin(){
                     title("VOTING ENDED");
                     fprintf(status,"0");
                 }else if(list1==3){
-                    title("REGISTRATION OPENED");
+                    title("RESET SYSTEM");
                     fprintf(status,"3");
+                    fclose(status);
+                    FILE *reset1,*reset2,*reset3,*reset4,*reset5,*reset6,*reset7,*reset8,*reset9,*reset10;
+                    reset1=fopen("voting.txt","w");
+                    fclose(reset1);
+                    reset2=fopen("party.txt","w");
+                    fclose(reset2);
+                    reset3=fopen("candidate.txt","w");
+                    fclose(reset3);
+                    reset4=fopen("rejectedcandidates.txt","w");
+                    fclose(reset4);
+                    reset5=fopen("seewinner.txt","w");
+                    fclose(reset5);
+                    reset6=fopen("voterdetails.txt","w");
+                    fclose(reset6);
+                    reset7=fopen("voternic.txt","w");
+                    fclose(reset7);
+                    reset8=fopen("Nominated_Candidate_List.txt","w");
+                    fclose(reset8);
+
+
+
                 }else if(list1==4){
                     title("EXIT");
                     break;
