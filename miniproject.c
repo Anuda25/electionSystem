@@ -22,7 +22,7 @@ int main(){
     display();
     while(true){
     	printf("1=Voter\n2=Candidate\n3=Admin\n4=See Winner\n5=Exit\n");
-	    printf("\nYour Choise: ");
+	    printf("\nYour Choice: ");
 	    scanf("%d",&list1);
         if(list1==1){
 			voter();
@@ -470,6 +470,7 @@ void candidate(){
             printf("\n\nYour Choice\t:");
             scanf("%d", &dashchoice);
             if(dashchoice == 1){
+                    //Display profile Interface
                     printf("\n======================================\n");
                     printf("\tPROFILE DETAILS\t\n");
                     printf("======================================\n\n");
