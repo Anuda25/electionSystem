@@ -483,7 +483,7 @@ void candidate(){
                     while(fgets(line,sizeof(line),C_details)){
                         sscanf(line, "%[^,],%[^,],%[^,],%[^,],%[^,]", C_nic , C_name , C_password , C_district , C_party);
                         if ((strcmp(C_password, password) == 0)&&(strcmp(C_nic, username) ==0 )){
-                            printf("\nNIC\t\t%s\nName\t\t%s\nPassword\t%s\nDistrict\t%s\nParty\t\t%s" , C_nic , C_name , C_password , C_district , C_party);
+                            printf("\nNIC\t\t= %s\nName\t\t= %s \nPassword\t= %s \nDistrict\t= %s\nParty\t\t= %s" , C_nic , C_name , C_password , C_district , C_party);
                             break;
                         }
                     }
