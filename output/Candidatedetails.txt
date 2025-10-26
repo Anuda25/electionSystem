@@ -1,2 +1,3 @@
 200477202530,Dulsha Hemini,1234,Matara,UNP
 200578212631,Nimal Perera,2345,Jaffna,JVP
+200578222640,Sanath Gunathilaka,2345,Hambantota,JVP
