@@ -366,7 +366,7 @@ void candidate(){
         scanf("%d", &choice );
 
         if(choice == 1){
-            bool exists = false;
+            exists = false;
             printf("\n======================================\n");
             printf("\tCANDIDATE REGISTRATION\t\n");
             printf("======================================\n\n");
@@ -451,7 +451,7 @@ void candidate(){
                     fclose(C_details);
                     //if username and password correct display login success or  not
                     if(x==1){
-                        printf("\n----Login Succesfull----\n");
+                        printf("\n----Login Succesfull! Welcome, %s----\n", C_name);
                         in = 1;
                     }
                     else{
@@ -466,7 +466,7 @@ void candidate(){
             printf("======================================\n\n");
             int dashchoice ;
 
-            printf("1.View Profile\n2.See Approvel\n3.Exit");
+            printf("1.View Profile\n2.See Approval\n3.Exit");
             printf("\n\nYour Choice\t:");
             scanf("%d", &dashchoice);
             if(dashchoice == 1){
@@ -515,12 +515,16 @@ void candidate(){
                         printf("\n----Congrats!You Have Nominated For the  Election----\n\n");
                     } 
                     else {
-                        printf("-----Registration Pending-----\n");
+                        printf("\n-----Registration Pending-----\n");
                     }
+                }
+                else if(dashchoice==3){
+                    printf("\n-----Exiting Dashboard-----\n");
+                    break;
                 }
                 else{
                     printf("-----Invalid Input! Please Try  Again-----\n\n");
-                    break;   
+                    continue;   
             }
         }
     }
